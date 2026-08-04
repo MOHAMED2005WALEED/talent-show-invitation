@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Talent Show 2024/2025 — Faculty of Management Studies, SUSL</title>
+<meta name="description" content="You are cordially invited to Talent Show 2024/2025, hosted by the Faculty of Management Studies, Sabaragamuwa University of Sri Lanka.">
+<meta name="theme-color" content="#0B0B0B">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Talent Show 2024/2025 — Faculty of Management Studies">
+<meta property="og:description" content="An evening of music, dance, drama and light. Sabaragamuwa University of Sri Lanka.">
+<meta property="og:type" content="website">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cinzel+Decorative:wght@700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+<!-- AOS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+<link rel="icon" href="assets/images/bottle.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<!-- ================= OPENING CINEMATIC SEQUENCE ================= -->
+<div id="intro" aria-hidden="false">
+  <canvas id="starCanvas"></canvas>
+  <div class="intro-glow"></div>
+
+  <div class="bottle-stage">
+    <div id="bottleWrap">
+      <svg id="bottleSvg" viewBox="0 0 220 420" role="img" aria-label="A glass bottle holding a golden invitation scroll">
+        <defs>
+          <linearGradient id="glassGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0.05"/>
+            <stop offset="0.18" stop-color="#ffffff" stop-opacity="0.35"/>
+            <stop offset="0.35" stop-color="#D4AF37" stop-opacity="0.12"/>
+            <stop offset="0.65" stop-color="#ffffff" stop-opacity="0.08"/>
+            <stop offset="0.85" stop-color="#ffffff" stop-opacity="0.28"/>
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0.05"/>
+          </linearGradient>
+          <linearGradient id="corkGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#c99a54"/>
+            <stop offset="1" stop-color="#8a5a2b"/>
+          </linearGradient>
+          <radialGradient id="glowGrad" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#F4E5B2" stop-opacity="0.9"/>
+            <stop offset="1" stop-color="#F4E5B2" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <ellipse id="bottleGlow" cx="110" cy="230" rx="60" ry="140" fill="url(#glowGrad)" opacity="0"/>
+        <path d="M85 60 L85 20 Q85 10 95 10 L125 10 Q135 10 135 20 L135 60
+                 Q170 100 175 160 Q180 230 175 300 Q170 380 150 400
+                 Q140 410 110 410 Q80 410 70 400 Q50 380 45 300
+                 Q40 230 45 160 Q50 100 85 60 Z"
+              fill="rgba(20,20,20,0.35)" stroke="url(#glassGrad)" stroke-width="2.5"/>
+        <line x1="95" y1="15" x2="95" y2="58" stroke="#ffffff" stroke-opacity="0.25" stroke-width="2"/>
+        <g id="cork">
+          <rect x="92" y="-6" width="36" height="34" rx="6" fill="url(#corkGrad)" stroke="#5c3a18" stroke-width="1"/>
+          <line x1="98" y1="0" x2="98" y2="22" stroke="#5c3a18" stroke-opacity="0.5"/>
+          <line x1="122" y1="0" x2="122" y2="22" stroke="#5c3a18" stroke-opacity="0.5"/>
+        </g>
+        <ellipse cx="110" cy="408" rx="55" ry="8" fill="#000" opacity="0.35"/>
+      </svg>
+      <div id="burstLight" aria-hidden="true"></div>
+      <div id="scroll">
+        <div class="scroll-rod scroll-rod--top"></div>
+        <div class="scroll-paper">
+          <p class="scroll-eyebrow">You are cordially invited</p>
+          <p class="scroll-title">Talent&nbsp;Show</p>
+          <p class="scroll-sub">2024 / 2025</p>
+        </div>
+        <div class="scroll-rod scroll-rod--bottom"></div>
+      </div>
+    </div>
+    <p id="introHint">Tap to begin</p>
+  </div>
+</div>
+
+<!-- ================= AMBIENT BACKGROUND (persists after intro) ================= -->
+<canvas id="bgCanvas" aria-hidden="true"></canvas>
+<div class="glow-orb glow-orb--a" aria-hidden="true"></div>
+<div class="glow-orb glow-orb--b" aria-hidden="true"></div>
+
+<!-- ================= SITE HEADER ================= -->
+<header class="site-header" id="siteHeader">
+  <div class="site-header__inner">
+    <a href="#main-content" class="brand">
+      <span class="brand__crest">✦</span>
+      <span class="brand__text">FMS <span>Talent Show</span></span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#event">Event</a>
+      <a href="#timeline">Programme</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#venue">Venue</a>
+      <a href="#rsvp" class="site-nav__cta">RSVP</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="hero">
+    <div class="hero__particles" aria-hidden="true"></div>
+    <div class="hero__content">
+      <p class="hero__eyebrow" data-aos="fade-down" data-aos-delay="100">Faculty of Management Studies</p>
+      <h1 class="hero__title">
+        <span class="hero__title-line" data-aos="zoom-in" data-aos-delay="250">Talent&nbsp;Show</span>
+        <span class="hero__title-year" data-aos="fade-up" data-aos-delay="450">2024&nbsp;/&nbsp;2025</span>
+      </h1>
+      <div class="hero__divider" data-aos="fade-up" data-aos-delay="600" aria-hidden="true"><span></span>✦<span></span></div>
+      <p class="hero__subtitle" data-aos="fade-up" data-aos-delay="700">
+        Sabaragamuwa University of Sri Lanka
+      </p>
+      <p class="hero__tagline" data-aos="fade-up" data-aos-delay="850">
+        An evening of music, movement and light — presented for our students, lecturers and honoured guests.
+      </p>
+      <a href="#rsvp" class="btn btn--gold" data-aos="fade-up" data-aos-delay="1000">
+        Reserve Your Seat <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+      </a>
+    </div>
+    <a href="#countdown" class="scroll-cue" aria-label="Scroll to countdown">
+      <span></span>
+    </a>
+  </section>
+
+  <!-- ================= COUNTDOWN ================= -->
+  <section class="countdown" id="countdown">
+    <p class="section-eyebrow" data-aos="fade-up">The Curtain Rises In</p>
+    <div class="countdown__grid" id="countdownGrid" data-aos="zoom-in" data-aos-delay="150">
+      <div class="countdown__unit">
+        <span class="countdown__num" id="cd-days">00</span>
+        <span class="countdown__label">Days</span>
+      </div>
+      <div class="countdown__sep" aria-hidden="true">:</div>
+      <div class="countdown__unit">
+        <span class="countdown__num" id="cd-hours">00</span>
+        <span class="countdown__label">Hours</span>
+      </div>
+      <div class="countdown__sep" aria-hidden="true">:</div>
+      <div class="countdown__unit">
+        <span class="countdown__num" id="cd-minutes">00</span>
+        <span class="countdown__label">Minutes</span>
+      </div>
+      <div class="countdown__sep" aria-hidden="true">:</div>
+      <div class="countdown__unit">
+        <span class="countdown__num" id="cd-seconds">00</span>
+        <span class="countdown__label">Seconds</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EVENT DETAILS ================= -->
+  <section class="details" id="event">
+    <p class="section-eyebrow" data-aos="fade-up">Event Details</p>
+    <h2 class="section-title" data-aos="fade-up">Everything You Need to Know</h2>
+
+    <div class="details__grid">
+      <article class="glass-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="glass-card__icon"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i></div>
+        <h3>Date</h3>
+        <p>Friday, 12th December 2025</p>
+      </article>
+      <article class="glass-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="glass-card__icon"><i class="fa-solid fa-clock" aria-hidden="true"></i></div>
+        <h3>Time</h3>
+        <p>6.00 PM Onwards</p>
+      </article>
+      <article class="glass-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="glass-card__icon"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></div>
+        <h3>Venue</h3>
+        <p>Main Auditorium, Sabaragamuwa University of Sri Lanka</p>
+      </article>
+      <article class="glass-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="glass-card__icon"><i class="fa-solid fa-shirt" aria-hidden="true"></i></div>
+        <h3>Dress Code</h3>
+        <p>Formal &amp; Traditional Elegance — Black and Gold encouraged</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= PROGRAM TIMELINE ================= -->
+  <section class="timeline" id="timeline">
+    <p class="section-eyebrow" data-aos="fade-up">Programme</p>
+    <h2 class="section-title" data-aos="fade-up">The Evening Unfolds</h2>
+
+    <ol class="timeline__list">
+      <li class="timeline__item" data-aos="fade-right">
+        <div class="timeline__icon"><i class="fa-solid fa-champagne-glasses" aria-hidden="true"></i></div>
+        <div class="timeline__body"><h3>Welcome</h3><p>Doors open, guests are seated with a warm reception.</p></div>
+      </li>
+      <li class="timeline__item" data-aos="fade-left">
+        <div class="timeline__icon"><i class="fa-solid fa-person-walking" aria-hidden="true"></i></div>
+        <div class="timeline__body"><h3>Opening Dance</h3><p>A choreographed piece to raise the curtain on the night.</p></div>
+      </li>
+      <li class="timeline__item" data-aos="fade-right">
+        <div class="timeline__icon"><i class="fa-solid fa-microphone" aria-hidden="true"></i></div>
+        <div class="timeline__body"><h3>Singing</h3><p>Vocal performances from our most gifted students.</p></div>
+      </li>
+      <li class="timeline__item" data-aos="fade-left">
+        <div class="timeline__icon"><i class="fa-solid fa-music" aria-hidden="true"></i></div>
+        <div class="timeline__body"><h3>Dancing</h3><p>A showcase of styles, from classical to contemporary.</p></div>
+      </li>
+      <li class="timeline__item" data-aos="fade-right">
+        <div class="timeline__icon"><i class="fa-solid fa-masks-theater" aria-hidden="true"></i></div>
+        <div class="timeline__body"><h3>Drama</h3><p>Short theatrical performances written and staged by students.</p></div>
+      </li>
+      <li class="timeline__item" data-aos="fade-left">
+        <div class="timeline__icon"><i class="fa-solid fa-dice" aria-hidden="true"></i></div>
+        <div class="timeline__body"><h3>Games</h3><p>Interactive segments inviting the audience onto the stage.</p></div>
+      </li>
+      <li class="timeline__item" data-aos="fade-right">
+        <div class="timeline__icon"><i class="fa-solid fa-trophy" aria-hidden="true"></i></div>
+        <div class="timeline__body"><h3>Awards</h3><p>Recognising the evening's most outstanding performances.</p></div>
+      </li>
+      <li class="timeline__item" data-aos="fade-left">
+        <div class="timeline__icon"><i class="fa-solid fa-record-vinyl" aria-hidden="true"></i></div>
+        <div class="timeline__body"><h3>DJ Session</h3><p>The floor opens as the night turns into celebration.</p></div>
+      </li>
+      <li class="timeline__item" data-aos="fade-right">
+        <div class="timeline__icon"><i class="fa-solid fa-star" aria-hidden="true"></i></div>
+        <div class="timeline__body"><h3>Closing</h3><p>Final remarks and a farewell until next year.</p></div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ================= GALLERY ================= -->
+  <section class="gallery" id="gallery">
+    <p class="section-eyebrow" data-aos="fade-up">Gallery</p>
+    <h2 class="section-title" data-aos="fade-up">Moments Worth Remembering</h2>
+    <p class="section-note" data-aos="fade-up">Placeholder artwork shown below — replace with your own event photography.</p>
+
+    <div class="gallery__grid">
+      <figure class="gallery__item" data-aos="zoom-in" data-aos-delay="0">
+        <img src="assets/images/gallery-1.svg" alt="Placeholder artwork for the singing segment" loading="lazy">
+      </figure>
+      <figure class="gallery__item" data-aos="zoom-in" data-aos-delay="100">
+        <img src="assets/images/gallery-2.svg" alt="Placeholder artwork for the dance segment" loading="lazy">
+      </figure>
+      <figure class="gallery__item" data-aos="zoom-in" data-aos-delay="200">
+        <img src="assets/images/gallery-3.svg" alt="Placeholder artwork for the drama segment" loading="lazy">
+      </figure>
+      <figure class="gallery__item" data-aos="zoom-in" data-aos-delay="0">
+        <img src="assets/images/gallery-4.svg" alt="Placeholder artwork for the awards segment" loading="lazy">
+      </figure>
+      <figure class="gallery__item" data-aos="zoom-in" data-aos-delay="100">
+        <img src="assets/images/gallery-5.svg" alt="Placeholder artwork for the DJ session" loading="lazy">
+      </figure>
+      <figure class="gallery__item" data-aos="zoom-in" data-aos-delay="200">
+        <img src="assets/images/gallery-6.svg" alt="Placeholder artwork for the closing segment" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= VENUE ================= -->
+  <section class="venue" id="venue">
+    <p class="section-eyebrow" data-aos="fade-up">Venue</p>
+    <h2 class="section-title" data-aos="fade-up">Find Your Way</h2>
+
+    <div class="venue__glass" data-aos="fade-up" data-aos-delay="100">
+      <div class="venue__map">
+        <iframe
+          title="Map showing Sabaragamuwa University of Sri Lanka"
+          src="https://www.google.com/maps?q=Sabaragamuwa%20University%20of%20Sri%20Lanka&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen></iframe>
+      </div>
+      <div class="venue__info">
+        <h3>Main Auditorium</h3>
+        <p>Sabaragamuwa University of Sri Lanka, P.O. Box 02, Belihuloya 70140, Sri Lanka</p>
+        <a class="btn btn--outline" href="https://www.google.com/maps?q=Sabaragamuwa%20University%20of%20Sri%20Lanka" target="_blank" rel="noopener">
+          Get Directions <i class="fa-solid fa-diamond-turn-right" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RSVP ================= -->
+  <section class="rsvp" id="rsvp">
+    <p class="section-eyebrow" data-aos="fade-up">RSVP</p>
+    <h2 class="section-title" data-aos="fade-up">Confirm Your Presence</h2>
+    <p class="section-note" data-aos="fade-up">Kindly let us know if you'll be joining us — it helps us prepare a night worthy of you.</p>
+
+    <form class="rsvp__form glass-card glass-card--form" id="rsvpForm" data-aos="zoom-in" data-aos-delay="100" novalidate>
+      <div class="field">
+        <label for="rsvpName">Name <span aria-hidden="true">*</span></label>
+        <input type="text" id="rsvpName" name="name" autocomplete="name" required placeholder="Your full name">
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="rsvpEmail">Email <span class="optional">(optional)</span></label>
+          <input type="email" id="rsvpEmail" name="email" autocomplete="email" placeholder="you@example.com">
+        </div>
+        <div class="field">
+          <label for="rsvpPhone">Phone <span class="optional">(optional)</span></label>
+          <input type="tel" id="rsvpPhone" name="phone" autocomplete="tel" placeholder="07X XXX XXXX">
+        </div>
+      </div>
+
+      <fieldset class="field field--attendance">
+        <legend>Will you attend? <span aria-hidden="true">*</span></legend>
+        <div class="attendance-options">
+          <label class="attendance-option">
+            <input type="radio" name="attendance" value="yes" required>
+            <span><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Yes</span>
+          </label>
+          <label class="attendance-option">
+            <input type="radio" name="attendance" value="no">
+            <span><i class="fa-solid fa-circle-xmark" aria-hidden="true"></i> No</span>
+          </label>
+          <label class="attendance-option">
+            <input type="radio" name="attendance" value="maybe">
+            <span><i class="fa-solid fa-circle-question" aria-hidden="true"></i> Maybe</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="btn btn--gold btn--block">
+        <span class="btn__label">Submit RSVP</span>
+        <i class="fa-solid fa-feather-pointed" aria-hidden="true"></i>
+      </button>
+
+      <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <p class="site-footer__crest">✦</p>
+    <p class="site-footer__title">Talent Show 2024 / 2025</p>
+    <p class="site-footer__sub">Faculty of Management Studies · Sabaragamuwa University of Sri Lanka</p>
+    <p class="site-footer__fine">Crafted with care for our students, lecturers and guests.</p>
+  </footer>
+
+</main>
+
+<!-- ================= FLOATING CONTROLS ================= -->
+<div class="floating-controls">
+  <button type="button" class="fab" id="musicToggle" aria-pressed="false" aria-label="Play background music">
+    <i class="fa-solid fa-music" aria-hidden="true"></i>
+  </button>
+  <button type="button" class="fab" id="shareBtn" aria-label="Share this invitation">
+    <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
+  </button>
+  <button type="button" class="fab fab--top" id="scrollTopBtn" aria-label="Scroll to top">
+    <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+  </button>
+</div>
+
+<!-- Background music: add your own instrumental file at this path -->
+<audio id="bgMusic" loop preload="none">
+  <source src="assets/audio/background-music.mp3" type="audio/mpeg">
+</audio>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
