@@ -23,7 +23,7 @@
   // RSVP straight into a shared Google Sheet (see README.md for the
   // 5-minute setup). Leave empty to keep RSVPs saved only in this
   // browser's localStorage (viewable via admin.html on this device).
-  const RSVP_SHEET_URL = "https://script.google.com/macros/s/AKfycbwlxUJee47LlPoFfGLWKtYWfEDcqMydAlTtYUBfRM8naMlAlHNHadxeKRLFl75Nh8zq0w/exec";
+  const RSVP_SHEET_URL = "https://script.google.com/macros/s/AKfycbz-RjkII9E_nECqtVhN7OjhatrjqeMLU2hJSaHD2EF2c_B7llq2-TCuKkTn2NANZplP/exec";
 
   /* =========================================================
      2. STAR / PARTICLE CANVAS (shared by intro + ambient bg)
