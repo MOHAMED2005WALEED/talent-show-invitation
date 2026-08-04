@@ -14,7 +14,7 @@
      ========================================================= */
   const EVENT = {
     // ISO date/time used for the live countdown. Edit to the real date.
-    dateTime: "2026-08-10T09:00:00+05:30",
+    dateTime: "2026-08-14T09:00:00+05:30",
     name: "Talent Show 2024/2025",
     venue: "Main Auditorium, Sabaragamuwa University of Sri Lanka"
   };
