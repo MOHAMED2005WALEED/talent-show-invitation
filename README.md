@@ -39,12 +39,25 @@ directly in a browser, or serve the folder with any static host
    inside that folder for sources). Music stays muted until a guest
    taps the floating music button — this respects autoplay policies on
    both Android and iPhone.
-6. **RSVP submissions** — the form currently saves responses to the
-   visitor's browser (`localStorage`) as a lightweight demo and shows a
-   confirmation message. For real submissions, replace the `fetch`-ready
-   block in the `rsvpForm` submit handler in `script.js` with a call to
-   your Google Form endpoint, a spreadsheet webhook (e.g. via Google
-   Apps Script), or your own backend.
+6. **RSVP submissions — where do they go?** By default, RSVPs are only
+   saved in the visitor's own browser (`localStorage`), so there's no
+   central list. Two ways to actually see them:
+
+   - **Quick local check:** open `admin.html` in the same browser someone
+     just submitted from. It lists every RSVP saved on that device, with
+     Refresh, Export CSV, and Clear all buttons. Good for testing, but it
+     only shows submissions made on that exact device/browser.
+   - **Real shared list (recommended):** connect the form to a Google
+     Sheet so every guest's RSVP — from any phone or computer — lands in
+     one place automatically.
+     1. Open `apps-script.gs` in this folder and follow the numbered
+        setup steps inside it (create a Sheet, paste the script into
+        Extensions → Apps Script, deploy as a Web App, copy the URL).
+     2. Paste that URL into the `RSVP_SHEET_URL` constant near the top
+        of `script.js`.
+     3. Re-upload `script.js`. From then on, every submission is written
+        as a new row in your Google Sheet, and still kept locally too
+        (so `admin.html` keeps working as a backup view).
 7. **Sinhala translation** — all visible copy lives in `index.html`.
    Duplicate the file as `index-si.html`, translate the text nodes, and
    link the two versions together (or swap the copy in place if you only

@@ -14,10 +14,16 @@
      ========================================================= */
   const EVENT = {
     // ISO date/time used for the live countdown. Edit to the real date.
-    dateTime: "2026-08-10T09:00:00+05:30",
+    dateTime: "2025-12-12T18:00:00+05:30",
     name: "Talent Show 2024/2025",
     venue: "Main Auditorium, Sabaragamuwa University of Sri Lanka"
   };
+
+  // Paste your deployed Google Apps Script Web App URL here to send every
+  // RSVP straight into a shared Google Sheet (see README.md for the
+  // 5-minute setup). Leave empty to keep RSVPs saved only in this
+  // browser's localStorage (viewable via admin.html on this device).
+  const RSVP_SHEET_URL = "";
 
   /* =========================================================
      2. STAR / PARTICLE CANVAS (shared by intro + ambient bg)
@@ -348,8 +354,11 @@
         submittedAt: new Date().toISOString()
       };
 
-      // Store locally as a lightweight demo of persistence.
-      // Replace this block with a fetch() call to your backend / Google Form / Sheet endpoint.
+      const submitBtn = rsvpForm.querySelector('button[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
+
+      // 1) Always keep a local copy so admin.html can show recent RSVPs
+      //    made on this device, even if the Sheet call below fails.
       try {
         const existing = JSON.parse(localStorage.getItem("talentshow_rsvps") || "[]");
         existing.push(payload);
@@ -363,9 +372,32 @@
         no: `Thank you for letting us know, ${name.split(" ")[0]}. You'll be missed!`,
         maybe: `Noted, ${name.split(" ")[0]} — we hope you can make it!`
       };
-      formStatus.textContent = messages[payload.attendance] || "Thank you for your response!";
-      rsvpForm.reset();
-      showToast("RSVP received — thank you!");
+
+      function wrapUp() {
+        formStatus.textContent = messages[payload.attendance] || "Thank you for your response!";
+        rsvpForm.reset();
+        showToast("RSVP received — thank you!");
+        if (submitBtn) submitBtn.disabled = false;
+      }
+
+      // 2) If a Google Sheet webhook URL is configured, send it there too
+      //    so every guest's response lands in one shared place.
+      if (RSVP_SHEET_URL) {
+        // no-cors: Apps Script web apps don't return CORS headers, so the
+        // response is opaque — we simply trust the request was sent.
+        fetch(RSVP_SHEET_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        })
+          .catch(() => {
+            showToast("Saved on this device — couldn't reach the shared sheet.");
+          })
+          .finally(wrapUp);
+      } else {
+        wrapUp();
+      }
     });
   }
 

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RSVP Admin — Talent Show 2024/2025</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<style>
+  :root{
+    --black:#0B0B0B; --gold:#D4AF37; --gold-light:#F4E5B2; --ivory:#F6F1E7;
+    --glass-bg:rgba(255,255,255,.05); --glass-border:rgba(212,175,55,.35);
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; min-height:100vh; background: radial-gradient(ellipse at top, #171410, var(--black) 70%);
+    color:var(--ivory); font-family:'Poppins',sans-serif; font-weight:300;
+    padding: 2.5rem 1.2rem 4rem;
+  }
+  .wrap{ max-width: 980px; margin: 0 auto; }
+  h1{ font-family:'Cinzel',serif; font-size: clamp(1.3rem,4vw,1.9rem); color:var(--gold-light); margin: 0 0 .3rem; }
+  .sub{ opacity:.65; font-size:.9rem; margin-bottom: 2rem; }
+  .notice{
+    background: var(--glass-bg); border:1px solid var(--glass-border); border-radius:12px;
+    padding: 1rem 1.2rem; font-size:.85rem; opacity:.85; margin-bottom: 1.8rem; line-height:1.6;
+  }
+  .toolbar{ display:flex; flex-wrap:wrap; gap:.7rem; margin-bottom: 1.5rem; align-items:center; }
+  .count{ font-size:.85rem; opacity:.7; margin-right:auto; }
+  button{
+    font-family:'Poppins',sans-serif; font-size:.82rem; cursor:pointer;
+    border:1px solid var(--glass-border); background: var(--glass-bg); color: var(--gold-light);
+    padding:.6rem 1.1rem; border-radius:999px; display:inline-flex; align-items:center; gap:.5rem;
+    transition: background .2s, transform .2s;
+  }
+  button:hover{ background: rgba(212,175,55,.18); transform: translateY(-2px); }
+  button.danger{ color:#f2a3a3; border-color: rgba(242,163,163,.35); }
+  button.danger:hover{ background: rgba(242,163,163,.12); }
+  .table-wrap{
+    overflow-x:auto; border:1px solid var(--glass-border); border-radius:14px;
+    background: var(--glass-bg);
+  }
+  table{ width:100%; border-collapse:collapse; font-size:.86rem; min-width: 640px; }
+  th, td{ padding:.85rem 1rem; text-align:left; border-bottom:1px solid rgba(212,175,55,.15); white-space:nowrap; }
+  th{ font-family:'Cinzel',serif; font-weight:500; color:var(--gold-light); font-size:.78rem; letter-spacing:.05em; text-transform:uppercase; }
+  tr:last-child td{ border-bottom:0; }
+  tr:hover td{ background: rgba(212,175,55,.05); }
+  .pill{ padding:.25rem .7rem; border-radius:999px; font-size:.75rem; font-weight:500; }
+  .pill--yes{ background: rgba(120,200,140,.15); color:#8fe0a6; }
+  .pill--no{ background: rgba(220,120,120,.15); color:#e88c8c; }
+  .pill--maybe{ background: rgba(212,175,55,.18); color: var(--gold-light); }
+  .empty{ text-align:center; padding: 3rem 1rem; opacity:.55; font-size:.9rem; }
+  a.back{ display:inline-flex; align-items:center; gap:.5rem; color:var(--gold-light); font-size:.85rem; margin-bottom:1.5rem; opacity:.8; text-decoration:none; }
+  a.back:hover{ opacity:1; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html"><i class="fa-solid fa-arrow-left"></i> Back to invitation</a>
+  <h1>RSVP Admin</h1>
+  <p class="sub">Talent Show 2024/2025 · Faculty of Management Studies, SUSL</p>
+
+  <div class="notice">
+    <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+    This page only shows RSVPs submitted <strong>from this exact browser and device</strong> —
+    it reads from local storage, not a shared server. If guests are submitting from their own
+    phones, set up the Google Sheet connection described in <code>README.md</code> so every
+    response lands in one place, then check that Sheet instead of this page.
+  </div>
+
+  <div class="toolbar">
+    <span class="count" id="count">0 responses</span>
+    <button id="refreshBtn"><i class="fa-solid fa-rotate"></i> Refresh</button>
+    <button id="exportBtn"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+    <button id="clearBtn" class="danger"><i class="fa-solid fa-trash"></i> Clear all</button>
+  </div>
+
+  <div class="table-wrap">
+    <table id="rsvpTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Attendance</th>
+          <th>Submitted</th>
+        </tr>
+      </thead>
+      <tbody id="rsvpBody"></tbody>
+    </table>
+    <div class="empty" id="emptyState" hidden>No RSVPs saved on this device yet.</div>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = "talentshow_rsvps";
+  const body = document.getElementById("rsvpBody");
+  const empty = document.getElementById("emptyState");
+  const table = document.getElementById("rsvpTable");
+  const count = document.getElementById("count");
+
+  function loadData() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function pillClass(v) {
+    return v === "yes" ? "pill--yes" : v === "no" ? "pill--no" : "pill--maybe";
+  }
+
+  function formatDate(iso) {
+    try {
+      return new Date(iso).toLocaleString(undefined, {
+        dateStyle: "medium", timeStyle: "short"
+      });
+    } catch (e) { return iso; }
+  }
+
+  function render() {
+    const data = loadData().slice().reverse(); // newest first
+    count.textContent = `${data.length} response${data.length === 1 ? "" : "s"}`;
+    body.innerHTML = "";
+
+    if (!data.length) {
+      table.hidden = true;
+      empty.hidden = false;
+      return;
+    }
+    table.hidden = false;
+    empty.hidden = true;
+
+    for (const r of data) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${escapeHtml(r.name || "—")}</td>
+        <td>${escapeHtml(r.email || "—")}</td>
+        <td>${escapeHtml(r.phone || "—")}</td>
+        <td><span class="pill ${pillClass(r.attendance)}">${escapeHtml(r.attendance || "—")}</span></td>
+        <td>${formatDate(r.submittedAt)}</td>
+      `;
+      body.appendChild(tr);
+    }
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+  }
+
+  document.getElementById("refreshBtn").addEventListener("click", render);
+
+  document.getElementById("clearBtn").addEventListener("click", () => {
+    if (confirm("Remove all RSVPs saved on this device? This cannot be undone.")) {
+      localStorage.removeItem(STORAGE_KEY);
+      render();
+    }
+  });
+
+  document.getElementById("exportBtn").addEventListener("click", () => {
+    const data = loadData();
+    if (!data.length) { alert("No RSVPs to export yet."); return; }
+    const header = ["Name", "Email", "Phone", "Attendance", "Submitted"];
+    const rows = data.map(r => [r.name, r.email, r.phone, r.attendance, r.submittedAt]);
+    const csv = [header, ...rows]
+      .map(row => row.map(cell => `"${String(cell || "").replace(/"/g, '""')}"`).join(","))
+      .join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `talent-show-rsvps-${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  render();
+</script>
+</body>
+</html>
