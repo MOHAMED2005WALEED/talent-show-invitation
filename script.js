@@ -14,9 +14,9 @@
      ========================================================= */
   const EVENT = {
     // ISO date/time used for the live countdown. Edit to the real date.
-    dateTime: "2026-08-14T09:00:00+05:30",
-    name: "Talent Show 2024/2025",
-    venue: "Main Auditorium, Sabaragamuwa University of Sri Lanka"
+    dateTime: "2026-08-14T09:30:00+05:30",
+    name: "ත්‍රිවේද",
+    venue: "Prof. Dayananda Somasundara Auditorium, Sabaragamuwa University of Sri Lanka"
   };
 
   // Paste your deployed Google Apps Script Web App URL here to send every
