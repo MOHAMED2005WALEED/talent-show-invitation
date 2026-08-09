@@ -4,6 +4,20 @@
    Design tokens, opening cinematic, and full site styling.
    ========================================================= */
 
+/* FN Sanka — legacy (non-Unicode) Sinhala display font used for the
+   hero title. Because this font is NOT Unicode-mapped, any text
+   rendered with it must be pre-converted from Unicode Sinhala into
+   FN Sanka's own ASCII byte layout (see .fn-sanka usage in index.html
+   and the comment above the hero title markup). Typing new Unicode
+   Sinhala text into a .fn-sanka element will NOT display correctly. */
+@font-face{
+  font-family: 'FN Sanka';
+  src: url('assets/fonts/FN_SANKA_Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root{
   /* --- Palette (brief-defined) --- */
   --black: #0B0B0B;
@@ -26,6 +40,7 @@
   --font-display-deco: 'Cinzel Decorative', serif;
   --font-body: 'Poppins', sans-serif;
   --font-sinhala: 'Noto Sans Sinhala', 'Cinzel', serif;
+  --font-fn-sanka: 'FN Sanka', 'Noto Sans Sinhala', serif;
 
   /* --- Motion --- */
   --ease-luxury: cubic-bezier(.22,1,.36,1);
@@ -306,6 +321,7 @@ main > section{ position:relative; padding: 6.5rem 1.5rem; max-width: var(--cont
   line-height:1.05;
 }
 .hero__title-line.sinhala{ font-family: 'Yaldevi', var(--font-sinhala); font-weight:300; letter-spacing:.01em; }
+.hero__title-line.fn-sanka{ font-family: var(--font-fn-sanka); font-weight:400; letter-spacing:0; }
 .hero__title-year{
   font-family: var(--font-display); font-size: clamp(1.1rem, 3vw, 1.6rem);
   letter-spacing:.3em; color: var(--ivory); opacity:.9;
