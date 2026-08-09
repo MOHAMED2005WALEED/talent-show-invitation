@@ -25,6 +25,7 @@
   --font-display: 'Cinzel', serif;
   --font-display-deco: 'Cinzel Decorative', serif;
   --font-body: 'Poppins', sans-serif;
+  --font-sinhala: 'Noto Sans Sinhala', 'Cinzel', serif;
 
   /* --- Motion --- */
   --ease-luxury: cubic-bezier(.22,1,.36,1);
@@ -59,6 +60,7 @@ a{ color: inherit; text-decoration:none; }
 ul, ol{ list-style:none; margin:0; padding:0; }
 button{ font-family:inherit; cursor:pointer; }
 h1,h2,h3,h4{ font-family: var(--font-display); font-weight: 600; margin:0; color: var(--ivory); }
+.sinhala{ font-family: var(--font-sinhala); }
 p{ margin:0; }
 
 /* Accessible focus ring */
@@ -111,50 +113,95 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
   50%{ transform: scale(1.12); opacity:1; }
 }
 
-.bottle-stage{
+.potha-stage{
   position: relative; z-index:2; text-align:center;
-  display:flex; flex-direction:column; align-items:center; gap: 2.2rem;
+  display:flex; flex-direction:column; align-items:center; gap: 2.4rem;
 }
-#bottleWrap{
-  position: relative; width: min(46vw, 200px);
-  filter: drop-shadow(0 30px 40px rgba(0,0,0,.6));
+#pothaWrap{
+  position: relative;
+  width: min(78vw, 320px);
+  height: 96px;
+  perspective: 1100px;
+  filter: drop-shadow(0 26px 34px rgba(0,0,0,.55));
 }
-#bottleSvg{ width:100%; height:auto; will-change: transform; overflow: visible; }
+
+/* binding cord across the top of the stack */
+.potha-cord{
+  position:absolute; left:50%; top:-14px; width: 92%;
+  transform: translateX(-50%);
+  overflow: visible; z-index:5;
+  transition: opacity .3s ease;
+}
+
+/* shared leaf/plank styling */
+.potha-leaf{
+  position:absolute; inset:0;
+  border-radius: 5px;
+  background: linear-gradient(180deg, #9c7239 0%, #7d5a2c 45%, #6a4a24 100%);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), inset 0 2px 6px rgba(0,0,0,.35);
+}
+
+.potha-leaf--base{
+  transform: translateY(10px) scale(.97);
+  opacity:.9;
+  background: linear-gradient(180deg, #8a6634 0%, #6e4e26 100%);
+}
+
+.potha-leaf--invite{
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background: linear-gradient(180deg, #fbf4de, #efe0ad);
+  color:#2a2210;
+  padding: .6rem 1rem;
+  opacity:0;
+  transform: scale(.92);
+  box-shadow: inset 0 0 18px rgba(0,0,0,.15);
+}
+
+.potha-leaf--cover{
+  display:flex; align-items:center; justify-content:center; gap:.5rem;
+  transform-origin: 50% 100%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  z-index:3;
+}
+
+.potha-hole{
+  position:absolute; top:14px; width:8px; height:8px; border-radius:50%;
+  background: radial-gradient(circle at 35% 35%, #2b1d0e, #0e0904 70%);
+  box-shadow: 0 1px 1px rgba(255,255,255,.15);
+}
+.potha-hole--l{ left: 34px; }
+.potha-hole--r{ right: 34px; }
+
+.potha-mandala{
+  width: 40px; height:40px; border-radius:50%; flex-shrink:0;
+  background:
+    repeating-conic-gradient(from 0deg,
+      rgba(244,229,178,.9) 0deg 8deg,
+      rgba(122,79,39,.5) 8deg 20deg);
+  box-shadow: 0 0 0 1px rgba(244,229,178,.35), inset 0 0 8px rgba(0,0,0,.35);
+  opacity:.85;
+}
+
+.potha-carving{
+  display:flex; align-items:baseline; gap:.15rem;
+  color: rgba(20,14,6,.88);
+  text-shadow: 0 1px 0 rgba(255,255,255,.12), 0 -1px 1px rgba(0,0,0,.5);
+}
+.potha-carving__title{ font-family: var(--font-sinhala); font-size:1.5rem; font-weight:700; letter-spacing:.01em; }
+.potha-carving__year{ font-family: var(--font-display); font-size:1.1rem; font-weight:700; }
 
 #burstLight{
-  position:absolute; left:50%; top:14%;
+  position:absolute; left:50%; top:40%;
   width: 10px; height:10px; border-radius:50%;
   background: radial-gradient(circle, #fff 0%, var(--gold-light) 35%, transparent 70%);
   transform: translate(-50%,-50%) scale(0);
-  opacity:0; pointer-events:none;
+  opacity:0; pointer-events:none; z-index:6;
 }
 
-#scroll{
-  position:absolute; left:50%; top:16%;
-  transform: translate(-50%, 0) scale(.15);
-  opacity:0;
-  width: 210px;
-  display:flex; flex-direction:column; align-items:center;
-  pointer-events:none;
-}
-.scroll-rod{
-  width: 230px; height:14px; border-radius:10px;
-  background: linear-gradient(180deg, var(--gold-light), var(--gold-deep));
-  box-shadow: 0 0 14px rgba(212,175,55,.6);
-}
-.scroll-paper{
-  width: 208px;
-  background: linear-gradient(180deg, #fbf4de, #efe0ad);
-  color: #2a2210;
-  padding: 1.4rem 1rem;
-  text-align:center;
-  box-shadow: inset 0 0 18px rgba(0,0,0,.15);
-  transform: scaleY(0);
-  transform-origin: top center;
-}
-.scroll-eyebrow{ font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; margin:0 0 .5rem; opacity:.75; font-family: var(--font-body); }
-.scroll-title{ font-family: var(--font-display); font-size:1.35rem; margin:0; letter-spacing:.04em; }
-.scroll-sub{ font-family: var(--font-display); font-size:.85rem; margin:.25rem 0 0; letter-spacing:.15em; }
+.scroll-eyebrow{ font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; margin:0 0 .4rem; opacity:.75; font-family: var(--font-body); }
+.scroll-title{ font-size:1.3rem; margin:0; letter-spacing:.04em; }
+.scroll-sub{ font-family: var(--font-display); font-size:.8rem; margin:.25rem 0 0; letter-spacing:.15em; }
 
 #introHint{
   font-family: var(--font-body);
@@ -258,6 +305,7 @@ main > section{ position:relative; padding: 6.5rem 1.5rem; max-width: var(--cont
   filter: drop-shadow(0 0 26px rgba(212,175,55,.35));
   line-height:1.05;
 }
+.hero__title-line.sinhala{ font-family: var(--font-sinhala); }
 .hero__title-year{
   font-family: var(--font-display); font-size: clamp(1.1rem, 3vw, 1.6rem);
   letter-spacing:.3em; color: var(--ivory); opacity:.9;
@@ -430,6 +478,7 @@ input:focus{ border-color: var(--gold); box-shadow: 0 0 0 4px rgba(212,175,55,.1
 .site-footer{ text-align:center; padding: 4rem 1.5rem 3rem; opacity:.85; }
 .site-footer__crest{ color: var(--gold); font-size:1.4rem; margin-bottom:.8rem; }
 .site-footer__title{ font-family: var(--font-display); font-size:1.15rem; letter-spacing:.05em; }
+.site-footer__title .sinhala{ font-family: var(--font-sinhala); }
 .site-footer__sub{ margin-top:.4rem; font-size:.85rem; opacity:.7; }
 .site-footer__fine{ margin-top:1.4rem; font-size:.75rem; opacity:.45; }
 

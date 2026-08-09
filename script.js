@@ -14,7 +14,7 @@
      ========================================================= */
   const EVENT = {
     // ISO date/time used for the live countdown. Edit to the real date.
-    dateTime: "2026-08-14T09:30:00+05:30",
+    dateTime: "2026-08-14T17:00:00+05:30",
     name: "ත්‍රිවේද",
     venue: "Prof. Dayananda Somasundara Auditorium, Sabaragamuwa University of Sri Lanka"
   };
@@ -91,14 +91,15 @@
   if (bgCanvas) createStarField(bgCanvas, { density: 0.00007, speed: 0.08 });
 
   /* =========================================================
-     3. OPENING CINEMATIC SEQUENCE (bottle -> cork -> scroll)
+     3. OPENING CINEMATIC SEQUENCE (puskola potha unties & opens)
      ========================================================= */
   const intro = document.getElementById("intro");
-  const bottleWrap = document.getElementById("bottleWrap");
-  const cork = () => document.querySelector("#bottleSvg #cork");
-  const bottleGlow = () => document.querySelector("#bottleSvg #bottleGlow");
+  const pothaWrap = document.getElementById("pothaWrap");
+  const pothaCord = document.getElementById("pothaCord");
+  const cordKnot = document.getElementById("cordKnot");
+  const pothaCover = document.getElementById("pothaCover");
+  const pothaInvite = document.getElementById("pothaInvite");
   const burstLight = document.getElementById("burstLight");
-  const scrollEl = document.getElementById("scroll");
   const introHint = document.getElementById("introHint");
   const siteHeader = document.getElementById("siteHeader");
 
@@ -121,33 +122,32 @@
       onComplete: finishIntro
     });
 
-    // gentle float-in
-    tl.fromTo(bottleWrap, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power3.out" });
+    // gentle float-in of the whole bound stack
+    tl.fromTo(pothaWrap, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power3.out" });
 
-    // idle floating loop happens via CSS-independent gsap for a couple cycles
-    tl.to(bottleWrap, { y: -14, duration: 1.1, ease: "sine.inOut", yoyo: true, repeat: 1 }, "-=0.2");
+    // a light idle sway before it opens
+    tl.to(pothaWrap, { y: -8, duration: 1, ease: "sine.inOut", yoyo: true, repeat: 1 }, "-=0.2");
 
-    // cork pop
-    tl.to(cork(), {
-      y: -70, x: 14, rotate: 35, opacity: 0, duration: 0.5, ease: "back.in(1.8)"
+    // the binding cord unties — knot loosens and the cord falls away
+    tl.to(cordKnot, {
+      scale: 0.3, rotate: 30, opacity: 0, duration: 0.4, ease: "back.in(1.6)",
+      transformOrigin: "50% 50%"
     }, "+=0.1");
+    tl.to(pothaCord, { opacity: 0, y: 10, duration: 0.4, ease: "power1.in" }, "<0.05");
 
-    // golden burst
+    // a soft glow as the cover lifts
     tl.set(burstLight, { opacity: 1 })
-      .to(burstLight, {
-        scale: 26, opacity: 0, duration: 0.9, ease: "power2.out"
-      }, "<");
+      .to(burstLight, { scale: 20, opacity: 0, duration: 0.9, ease: "power2.out" }, "-=0.1");
 
-    // bottle glows from within right as cork pops
-    tl.to(bottleGlow(), { opacity: 0.9, duration: 0.35 }, "<");
+    // the carved cover leaf opens upward like a book, hinged at the base
+    tl.to(pothaCover, {
+      rotationX: -132, duration: 0.9, ease: "power3.inOut", transformPerspective: 900
+    }, "-=0.5");
 
-    // scroll rises out
-    tl.to(scrollEl, {
-      opacity: 1, scale: 1, y: -60, duration: 0.9, ease: "power3.out"
-    }, "-=0.4");
-
-    // scroll unfurls
-    tl.to(".scroll-paper", { scaleY: 1, duration: 0.7, ease: "power2.inOut" }, "-=0.3");
+    // the invitation leaf underneath is revealed
+    tl.to(pothaInvite, {
+      opacity: 1, scale: 1, duration: 0.6, ease: "power2.out"
+    }, "-=0.5");
 
     // hold, then fade whole intro to reveal site
     tl.to(intro, { opacity: 0, duration: 0.9, ease: "power2.inOut", delay: 0.9 });

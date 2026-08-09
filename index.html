@@ -15,7 +15,7 @@
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cinzel+Decorative:wght@700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cinzel+Decorative:wght@700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -35,53 +35,45 @@
   <canvas id="starCanvas"></canvas>
   <div class="intro-glow"></div>
 
-  <div class="bottle-stage">
-    <div id="bottleWrap">
-      <svg id="bottleSvg" viewBox="0 0 220 420" role="img" aria-label="A glass bottle holding a golden invitation scroll">
-        <defs>
-          <linearGradient id="glassGrad" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#ffffff" stop-opacity="0.05"/>
-            <stop offset="0.18" stop-color="#ffffff" stop-opacity="0.35"/>
-            <stop offset="0.35" stop-color="#D4AF37" stop-opacity="0.12"/>
-            <stop offset="0.65" stop-color="#ffffff" stop-opacity="0.08"/>
-            <stop offset="0.85" stop-color="#ffffff" stop-opacity="0.28"/>
-            <stop offset="1" stop-color="#ffffff" stop-opacity="0.05"/>
-          </linearGradient>
-          <linearGradient id="corkGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#c99a54"/>
-            <stop offset="1" stop-color="#8a5a2b"/>
-          </linearGradient>
-          <radialGradient id="glowGrad" cx="0.5" cy="0.5" r="0.5">
-            <stop offset="0" stop-color="#F4E5B2" stop-opacity="0.9"/>
-            <stop offset="1" stop-color="#F4E5B2" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-        <ellipse id="bottleGlow" cx="110" cy="230" rx="60" ry="140" fill="url(#glowGrad)" opacity="0"/>
-        <path d="M85 60 L85 20 Q85 10 95 10 L125 10 Q135 10 135 20 L135 60
-                 Q170 100 175 160 Q180 230 175 300 Q170 380 150 400
-                 Q140 410 110 410 Q80 410 70 400 Q50 380 45 300
-                 Q40 230 45 160 Q50 100 85 60 Z"
-              fill="rgba(20,20,20,0.35)" stroke="url(#glassGrad)" stroke-width="2.5"/>
-        <line x1="95" y1="15" x2="95" y2="58" stroke="#ffffff" stroke-opacity="0.25" stroke-width="2"/>
-        <g id="cork">
-          <rect x="92" y="-6" width="36" height="34" rx="6" fill="url(#corkGrad)" stroke="#5c3a18" stroke-width="1"/>
-          <line x1="98" y1="0" x2="98" y2="22" stroke="#5c3a18" stroke-opacity="0.5"/>
-          <line x1="122" y1="0" x2="122" y2="22" stroke="#5c3a18" stroke-opacity="0.5"/>
+  <div class="potha-stage">
+    <div id="pothaWrap">
+
+      <!-- binding cord threaded through the leaves, tied in a knot -->
+      <svg class="potha-cord" id="pothaCord" viewBox="0 0 230 34" aria-hidden="true">
+        <path d="M18 6 C 70 30, 160 30, 212 6" fill="none" stroke="#7a4f27" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="18" cy="6" r="3.5" fill="#3c2a16"/>
+        <circle cx="212" cy="6" r="3.5" fill="#3c2a16"/>
+        <g id="cordKnot">
+          <circle cx="115" cy="24" r="6" fill="none" stroke="#7a4f27" stroke-width="2.5"/>
+          <path d="M110 28 Q115 36 120 28" fill="none" stroke="#7a4f27" stroke-width="2.5" stroke-linecap="round"/>
         </g>
-        <ellipse cx="110" cy="408" rx="55" ry="8" fill="#000" opacity="0.35"/>
       </svg>
-      <div id="burstLight" aria-hidden="true"></div>
-      <div id="scroll">
-        <div class="scroll-rod scroll-rod--top"></div>
-        <div class="scroll-paper">
-          <p class="scroll-eyebrow">You are cordially invited</p>
-          <p class="scroll-title">ත්‍රිවේද</p>
-          <p class="scroll-sub">Talent Show 2024 / 2025</p>
-        </div>
-        <div class="scroll-rod scroll-rod--bottom"></div>
+
+      <!-- base leaf: stays put, peeks out from underneath -->
+      <div class="potha-leaf potha-leaf--base" aria-hidden="true"></div>
+
+      <!-- inner leaf: the invitation, revealed once the cover opens -->
+      <div class="potha-leaf potha-leaf--invite" id="pothaInvite">
+        <p class="scroll-eyebrow">You are cordially invited</p>
+        <p class="scroll-title sinhala">ත්‍රිවේද</p>
+        <p class="scroll-sub">Talent Show 2024 / 2025</p>
       </div>
+
+      <!-- cover leaf: carved title, opens upward to reveal the invite -->
+      <div class="potha-leaf potha-leaf--cover" id="pothaCover" role="img" aria-label="A carved wooden puskola potha reading Trivedha '26">
+        <span class="potha-hole potha-hole--l" aria-hidden="true"></span>
+        <span class="potha-mandala potha-mandala--l" aria-hidden="true"></span>
+        <div class="potha-carving">
+          <span class="potha-carving__title sinhala">ත්‍රිවේද</span>
+          <span class="potha-carving__year">&nbsp;'26</span>
+        </div>
+        <span class="potha-mandala potha-mandala--r" aria-hidden="true"></span>
+        <span class="potha-hole potha-hole--r" aria-hidden="true"></span>
+      </div>
+
+      <div id="burstLight" aria-hidden="true"></div>
     </div>
-    <p id="introHint">Tap to begin</p>
+    <p id="introHint">Tap to open</p>
   </div>
 </div>
 
@@ -115,7 +107,7 @@
     <div class="hero__content">
       <p class="hero__eyebrow" data-aos="fade-down" data-aos-delay="100">Faculty of Management Studies</p>
       <h1 class="hero__title">
-        <span class="hero__title-line" data-aos="zoom-in" data-aos-delay="250">ත්‍රිවේද</span>
+        <span class="hero__title-line sinhala" data-aos="zoom-in" data-aos-delay="250">ත්‍රිවේද</span>
         <span class="hero__title-year" data-aos="fade-up" data-aos-delay="450">Talent&nbsp;Show&nbsp;2024&nbsp;/&nbsp;2025</span>
       </h1>
       <div class="hero__divider" data-aos="fade-up" data-aos-delay="600" aria-hidden="true"><span></span>✦<span></span></div>
@@ -174,7 +166,7 @@
       <article class="glass-card" data-aos="fade-up" data-aos-delay="100">
         <div class="glass-card__icon"><i class="fa-solid fa-clock" aria-hidden="true"></i></div>
         <h3>Time</h3>
-        <p>9.30 AM Onwards</p>
+        <p>5.00 PM Onwards</p>
       </article>
       <article class="glass-card" data-aos="fade-up" data-aos-delay="200">
         <div class="glass-card__icon"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></div>
@@ -184,7 +176,7 @@
       <article class="glass-card" data-aos="fade-up" data-aos-delay="300">
         <div class="glass-card__icon"><i class="fa-solid fa-shirt" aria-hidden="true"></i></div>
         <h3>Dress Code</h3>
-        <p>Formal &amp; Traditional Elegance — Black and Gold encouraged</p>
+        <p>Casual</p>
       </article>
     </div>
   </section>
@@ -339,7 +331,7 @@
   <!-- ================= FOOTER ================= -->
   <footer class="site-footer">
     <p class="site-footer__crest">✦</p>
-    <p class="site-footer__title">ත්‍රිවේද — Talent Show 2024 / 2025</p>
+    <p class="site-footer__title"><span class="sinhala">ත්‍රිවේද</span> — Talent Show 2024 / 2025</p>
     <p class="site-footer__sub">Faculty of Management Studies · Sabaragamuwa University of Sri Lanka</p>
     <p class="site-footer__fine">Crafted with care for our students, lecturers and guests.</p>
   </footer>
