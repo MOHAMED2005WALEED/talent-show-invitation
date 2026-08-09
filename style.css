@@ -231,7 +231,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
 /* ===================== SITE HEADER ===================== */
 .site-header{
   position: fixed; top:0; left:0; right:0; z-index: 200;
-  padding: 1rem 0;
+  padding: calc(1rem + env(safe-area-inset-top)) 0 1rem;
   background: linear-gradient(180deg, rgba(11,11,11,.85), rgba(11,11,11,0));
   transition: background var(--dur-fast) ease, backdrop-filter var(--dur-fast) ease, padding var(--dur-fast) ease;
   opacity:0; transform: translateY(-12px);
@@ -241,7 +241,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
   background: rgba(11,11,11,.75);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(212,175,55,.15);
-  padding: .65rem 0;
+  padding: calc(.65rem + env(safe-area-inset-top)) 0 .65rem;
 }
 .site-header__inner{
   max-width: var(--container); margin:0 auto; padding: 0 1.5rem;
@@ -341,7 +341,7 @@ main > section{ position:relative; padding: 6.5rem 1.5rem; max-width: var(--cont
 .hero__tagline{ margin: 1.1rem auto 2.2rem; max-width: 460px; opacity:.75; font-weight:300; font-size:.95rem; }
 
 .scroll-cue{
-  position:absolute; bottom: 2.2rem; left:50%; transform: translateX(-50%);
+  position:absolute; bottom: calc(2.2rem + env(safe-area-inset-bottom)); left:50%; transform: translateX(-50%);
   width: 26px; height: 42px; border: 1.5px solid var(--glass-border); border-radius: 20px;
   display:flex; align-items:flex-start; justify-content:center; padding-top:7px;
 }
@@ -514,7 +514,7 @@ input:focus{ border-color: var(--gold); box-shadow: 0 0 0 4px rgba(212,175,55,.1
 
 /* ===================== FLOATING CONTROLS ===================== */
 .floating-controls{
-  position: fixed; right: 1.2rem; bottom: 1.4rem; z-index: 150;
+  position: fixed; right: 1.2rem; bottom: calc(1.4rem + env(safe-area-inset-bottom)); z-index: 150;
   display:flex; flex-direction:column; gap:.7rem;
 }
 .fab{
@@ -532,7 +532,7 @@ input:focus{ border-color: var(--gold); box-shadow: 0 0 0 4px rgba(212,175,55,.1
 
 /* ===================== TOAST ===================== */
 .toast{
-  position: fixed; left:50%; bottom: 1.6rem; transform: translate(-50%, 20px);
+  position: fixed; left:50%; bottom: calc(1.6rem + env(safe-area-inset-bottom)); transform: translate(-50%, 20px);
   background: rgba(11,11,11,.92); border:1px solid var(--glass-border);
   color: var(--gold-light); padding:.8rem 1.4rem; border-radius: 999px;
   font-size:.85rem; z-index: 300; opacity:0; pointer-events:none;
