@@ -321,7 +321,16 @@ main > section{ position:relative; padding: 6.5rem 1.5rem; max-width: var(--cont
   line-height:1.05;
 }
 .hero__title-line.sinhala{ font-family: 'Yaldevi', var(--font-sinhala); font-weight:300; letter-spacing:.01em; }
-.hero__title-line.fn-sanka{ font-family: var(--font-fn-sanka); font-weight:400; letter-spacing:0; }
+.hero__title-line.fn-sanka{
+  font-family: var(--font-fn-sanka);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.6;
+  padding: .25em 0;
+  display: inline-block;
+  -webkit-text-stroke: 1.1px var(--gold-light);
+  text-stroke: 1.1px var(--gold-light);
+}
 .hero__title-year{
   font-family: var(--font-display); font-size: clamp(1.1rem, 3vw, 1.6rem);
   letter-spacing:.3em; color: var(--ivory); opacity:.9;
