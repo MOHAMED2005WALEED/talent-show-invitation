@@ -14,7 +14,7 @@
      ========================================================= */
   const EVENT = {
     // ISO date/time used for the live countdown. Edit to the real date.
-    dateTime: "2026-08-14T17:30:00+05:30",
+    dateTime: "2026-09-02T17:30:00+05:30",
     name: "ත්‍රිවේද",
     venue: "Prof. Dayananda Somasundara Auditorium, Sabaragamuwa University of Sri Lanka"
   };
