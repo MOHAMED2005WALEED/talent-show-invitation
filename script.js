@@ -25,6 +25,19 @@
   // browser's localStorage (viewable via admin.html on this device).
   const RSVP_SHEET_URL = "https://script.google.com/macros/s/AKfycbyRaSpqJpKbzJCzrUYp_9AEDMtcORH--q6gAY45o1CmREsCQjvWMJ3JodmPz6qVvxlDnQ/exec";
 
+  // Paste the Faculty Students' Union Facebook Page/Live link here — this
+  // is where the "Watch Live" button on the site sends guests. Best options:
+  //   1. https://www.facebook.com/YOUR_PAGE_NAME  (goes to the page; guests
+  //      will see the Live video pinned/at the top once you go live), or
+  //   2. the direct video URL Facebook gives you the moment you start a
+  //      Live broadcast (looks like https://www.facebook.com/PAGE/videos/12345/)
+  //      — swap it in right when you go live on the day.
+  const LIVE_STREAM_URL = "https://www.facebook.com/YOUR_UNION_PAGE";
+
+  // How long the broadcast badge should say "LIVE NOW" for, starting from
+  // EVENT.dateTime (in hours). Adjust to roughly match the show's length.
+  const LIVE_DURATION_HOURS = 4;
+
   /* =========================================================
      2. STAR / PARTICLE CANVAS (shared by intro + ambient bg)
      ========================================================= */
@@ -292,6 +305,38 @@
     setInterval(tick, 1000);
   }
   startCountdown();
+
+  /* =========================================================
+     7b. WATCH LIVE — badge + button
+     ========================================================= */
+  function initWatchLive() {
+    const btn = document.getElementById("watchLiveBtn");
+    const badge = document.getElementById("liveBadge");
+    const badgeText = document.getElementById("liveBadgeText");
+    if (!btn || !badge || !badgeText) return;
+
+    btn.href = LIVE_STREAM_URL;
+
+    const start = new Date(EVENT.dateTime).getTime();
+    const end = start + LIVE_DURATION_HOURS * 3600000;
+
+    function updateBadge() {
+      const now = Date.now();
+      if (now >= start && now < end) {
+        badge.classList.add("is-live");
+        badgeText.textContent = "Live Now";
+      } else if (now >= end) {
+        badge.classList.remove("is-live");
+        badgeText.textContent = "Watch The Replay";
+      } else {
+        badge.classList.remove("is-live");
+        badgeText.textContent = "Streaming Soon";
+      }
+    }
+    updateBadge();
+    setInterval(updateBadge, 30000);
+  }
+  initWatchLive();
 
   /* =========================================================
      8. HERO AMBIENT PARTICLES (small floating gold flecks)
