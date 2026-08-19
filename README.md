@@ -58,14 +58,31 @@ directly in a browser, or serve the folder with any static host
      3. Re-upload `script.js`. From then on, every submission is written
         as a new row in your Google Sheet, and still kept locally too
         (so `admin.html` keeps working as a backup view).
-7. **Watch Live button** — open `script.js`, edit the `LIVE_STREAM_URL`
-   constant near the top (next to `RSVP_SHEET_URL`) to your Faculty
-   Students' Union Facebook Page link, or the direct video URL Facebook
-   gives you the moment you start broadcasting. The badge above the
-   button automatically switches between "Streaming Soon" → "Live Now"
-   (pulsing red dot) → "Watch The Replay", timed off `EVENT.dateTime`
-   and the `LIVE_DURATION_HOURS` constant — adjust that number to roughly
-   match how long the show runs.
+7. **Watch Live button & inline player** — open `script.js`, edit the
+   `LIVE_STREAM_URL` constant near the top (next to `RSVP_SHEET_URL`).
+   The moment that's a real link, two things happen automatically:
+   - Facebook's official video plugin is embedded right inside the
+     "Watch Live" section, so the stream **plays directly on the site**
+     (no click-through needed) — same as pasting a video link into a
+     Facebook post to embed it elsewhere.
+   - The "Open on Facebook" button below the player also starts pointing
+     to that link, as a fallback for anyone whose browser blocks embeds
+     (common in some in-app browsers like Instagram/Messenger's).
+
+   Two options for `LIVE_STREAM_URL`:
+   - The direct video URL Facebook gives you the moment you go live
+     (looks like `https://www.facebook.com/PAGE/videos/12345/`) — most
+     reliable, use this once broadcasting starts.
+   - The Union Page's main URL — Facebook's plugin will usually surface
+     whatever is live/most recent there, but the direct video link above
+     is more dependable.
+
+   The badge above the player automatically switches between
+   "Streaming Soon" → "Live Now" (pulsing red dot) → "Watch The Replay",
+   timed off `EVENT.dateTime` and the `LIVE_DURATION_HOURS` constant —
+   adjust that number to roughly match how long the show runs. Until
+   `LIVE_STREAM_URL` is a real link, the player area just shows a
+   placeholder icon instead of a broken embed.
 
    **To actually go live from the Union's Facebook Page on the day:**
    1. On the phone/laptop logged in as an admin of the Union's Page,
@@ -82,13 +99,17 @@ directly in a browser, or serve the folder with any static host
    4. Facebook shows a short countdown, then you're broadcasting — the
       video URL appears immediately in the address bar (desktop) or by
       tapping **Share → Copy Link** (mobile). Paste that URL into
-      `LIVE_STREAM_URL` in `script.js` and re-upload, so the button
-      jumps straight to the broadcast instead of just the Page.
-   5. For a stable stream over a couple of hours: prefer Wi-Fi over
+      `LIVE_STREAM_URL` in `script.js` and re-upload — this makes the
+      embedded player on the site show the actual live video.
+   5. In the Union Page's **Settings → Privacy**, make sure the video's
+      privacy is set to Public — the embed plugin can't play private or
+      restricted videos.
+   6. For a stable stream over a couple of hours: prefer Wi-Fi over
       mobile data if possible, keep the phone plugged into power, and
       use a tripod/stabilizer pointed at the stage.
-   6. Tap **Finish** when the show ends — the video stays on the Page as
-      a replay automatically, so latecomers can still watch it after.
+   7. Tap **Finish** when the show ends — the video stays on the Page as
+      a replay automatically, and the same embed keeps working so
+      latecomers can watch it after.
 
 8. **Sinhala translation** — all visible copy lives in `index.html`.
    Duplicate the file as `index-si.html`, translate the text nodes, and

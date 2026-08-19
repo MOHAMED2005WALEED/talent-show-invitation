@@ -313,9 +313,34 @@
     const btn = document.getElementById("watchLiveBtn");
     const badge = document.getElementById("liveBadge");
     const badgeText = document.getElementById("liveBadgeText");
-    if (!btn || !badge || !badgeText) return;
+    const player = document.getElementById("livePlayer");
+    const placeholder = document.getElementById("livePlaceholder");
+    if (!btn || !badge || !badgeText || !player) return;
 
-    btn.href = LIVE_STREAM_URL;
+    const hasRealUrl = LIVE_STREAM_URL && !LIVE_STREAM_URL.includes("YOUR_UNION_PAGE");
+    btn.href = hasRealUrl ? LIVE_STREAM_URL : "#";
+
+    // Embed Facebook's video plugin so the stream plays right on the page.
+    // Works once LIVE_STREAM_URL points at a specific video (either the
+    // Live video's own link, or a link straight to the Page — Facebook's
+    // plugin will show whatever video is live/most recent on that link).
+    function mountEmbed() {
+      if (!hasRealUrl || !placeholder) return;
+      const encoded = encodeURIComponent(LIVE_STREAM_URL);
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.facebook.com/plugins/video.php?href=${encoded}&show_text=false&autoplay=false`;
+      iframe.setAttribute("allowfullscreen", "true");
+      iframe.setAttribute(
+        "allow",
+        "autoplay; encrypted-media; picture-in-picture; web-share"
+      );
+      iframe.setAttribute(
+        "title",
+        "ත්‍රිවේද '26 — Live on Facebook"
+      );
+      placeholder.replaceWith(iframe);
+    }
+    mountEmbed();
 
     const start = new Date(EVENT.dateTime).getTime();
     const end = start + LIVE_DURATION_HOURS * 3600000;
