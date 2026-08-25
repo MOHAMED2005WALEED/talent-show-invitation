@@ -32,7 +32,7 @@
   //   2. the direct video URL Facebook gives you the moment you start a
   //      Live broadcast (looks like https://www.facebook.com/PAGE/videos/12345/)
   //      — swap it in right when you go live on the day.https://www.facebook.com/YOUR_UNION_PAGE
-  const LIVE_STREAM_URL = "https://web.facebook.com/MOHAMED2005WALEED/videos/1990810241637842/";
+  const LIVE_STREAM_URL = "https://web.facebook.com/MOHAMED2005WALEED/videos/1058771470486503/";
 
   // How long the broadcast badge should say "LIVE NOW" for, starting from
   // EVENT.dateTime (in hours). Adjust to roughly match the show's length.
