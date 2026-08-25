@@ -32,7 +32,7 @@
   //   2. the direct video URL Facebook gives you the moment you start a
   //      Live broadcast (looks like https://www.facebook.com/PAGE/videos/12345/)
   //      — swap it in right when you go live on the day.https://www.facebook.com/YOUR_UNION_PAGE
-  const LIVE_STREAM_URL = "https://web.facebook.com/share/v/1D7S3TujQr/";
+  const LIVE_STREAM_URL = "https://web.facebook.com/share/v/1Cmokpes3s/";
 
   // How long the broadcast badge should say "LIVE NOW" for, starting from
   // EVENT.dateTime (in hours). Adjust to roughly match the show's length.
@@ -320,18 +320,34 @@
     const hasRealUrl = LIVE_STREAM_URL && !LIVE_STREAM_URL.includes("YOUR_UNION_PAGE");
     btn.href = hasRealUrl ? LIVE_STREAM_URL : "#";
 
-    // Facebook's video plugin only works with a link to one SPECIFIC
-    // video — a plain Page URL (facebook.com/YourPage) is not enough and
-    // shows "Video unavailable". Only mount the embed once the URL looks
-    // like an actual video/live/watch permalink; otherwise fall back to
+    // Facebook's video plugin only works with a link to one SPECIFIC,
+    // PUBLIC video — a plain Page URL (facebook.com/YourPage) is not
+    // enough, and neither is the "Producer" dashboard link
+    // (facebook.com/live/producer/...) — that one is a private,
+    // admin-only setup screen that guests can never see, even once
+    // you're broadcasting. Only mount the embed once the URL looks like
+    // an actual public video/watch permalink; otherwise fall back to
     // the placeholder + "Open on Facebook" button so nothing ever breaks.
+    const isProducerUrl = /\/live\/producer\//i.test(LIVE_STREAM_URL || "");
     const looksLikeVideoUrl =
       hasRealUrl &&
-      /\/(videos|watch|live|reel)(\/|\?|$)/i.test(LIVE_STREAM_URL);
+      !isProducerUrl &&
+      /\/(videos|watch|reel|share\/v)(\/|\?|$)/i.test(LIVE_STREAM_URL);
 
     // Embed Facebook's video plugin so the stream plays right on the page.
     function mountEmbed() {
-      if (!looksLikeVideoUrl || !placeholder) return;
+      if (!placeholder) return;
+
+      if (isProducerUrl) {
+        const p = placeholder.querySelector("p");
+        if (p) {
+          p.textContent =
+            "That link is the private Producer setup screen — swap it for the public video link (Share \u2192 Copy Link on the live video) once you're broadcasting.";
+        }
+        return;
+      }
+      if (!looksLikeVideoUrl) return;
+
       const encoded = encodeURIComponent(LIVE_STREAM_URL);
       const iframe = document.createElement("iframe");
       iframe.src = `https://www.facebook.com/plugins/video.php?href=${encoded}&show_text=false&autoplay=false`;
