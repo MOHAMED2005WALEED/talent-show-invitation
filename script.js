@@ -31,8 +31,8 @@
   //      will see the Live video pinned/at the top once you go live), or
   //   2. the direct video URL Facebook gives you the moment you start a
   //      Live broadcast (looks like https://www.facebook.com/PAGE/videos/12345/)
-  //      — swap it in right when you go live on the day.https://www.facebook.com/YOUR_UNION_PAGE
-  const LIVE_STREAM_URL = "https://www.facebook.com/live/producer/1710318380022913/";
+  //      — swap it in right when you go live on the day.
+  const LIVE_STREAM_URL = "https://www.facebook.com/YOUR_UNION_PAGE";
 
   // How long the broadcast badge should say "LIVE NOW" for, starting from
   // EVENT.dateTime (in hours). Adjust to roughly match the show's length.
@@ -320,12 +320,18 @@
     const hasRealUrl = LIVE_STREAM_URL && !LIVE_STREAM_URL.includes("YOUR_UNION_PAGE");
     btn.href = hasRealUrl ? LIVE_STREAM_URL : "#";
 
+    // Facebook's video plugin only works with a link to one SPECIFIC
+    // video — a plain Page URL (facebook.com/YourPage) is not enough and
+    // shows "Video unavailable". Only mount the embed once the URL looks
+    // like an actual video/live/watch permalink; otherwise fall back to
+    // the placeholder + "Open on Facebook" button so nothing ever breaks.
+    const looksLikeVideoUrl =
+      hasRealUrl &&
+      /\/(videos|watch|live|reel)(\/|\?|$)/i.test(LIVE_STREAM_URL);
+
     // Embed Facebook's video plugin so the stream plays right on the page.
-    // Works once LIVE_STREAM_URL points at a specific video (either the
-    // Live video's own link, or a link straight to the Page — Facebook's
-    // plugin will show whatever video is live/most recent on that link).
     function mountEmbed() {
-      if (!hasRealUrl || !placeholder) return;
+      if (!looksLikeVideoUrl || !placeholder) return;
       const encoded = encodeURIComponent(LIVE_STREAM_URL);
       const iframe = document.createElement("iframe");
       iframe.src = `https://www.facebook.com/plugins/video.php?href=${encoded}&show_text=false&autoplay=false`;

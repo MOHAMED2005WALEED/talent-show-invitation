@@ -71,11 +71,17 @@ directly in a browser, or serve the folder with any static host
 
    Two options for `LIVE_STREAM_URL`:
    - The direct video URL Facebook gives you the moment you go live
-     (looks like `https://www.facebook.com/PAGE/videos/12345/`) — most
-     reliable, use this once broadcasting starts.
-   - The Union Page's main URL — Facebook's plugin will usually surface
-     whatever is live/most recent there, but the direct video link above
-     is more dependable.
+     (looks like `https://www.facebook.com/PAGE/videos/12345/`) — this
+     is the one to use; the player only embeds once the link contains
+     `/videos/`, `/watch/`, `/live/`, or `/reel/`.
+   - **Do not** use just the Page's main URL
+     (`facebook.com/YourPage`) as a placeholder and expect it to embed —
+     Facebook's plugin needs one specific video, so a bare Page link
+     shows "Video unavailable" instead of playing anything. Until you
+     have a real video link, leave `LIVE_STREAM_URL` as the default
+     `YOUR_UNION_PAGE` placeholder — the site will show a clean "check
+     back later" placeholder instead of a broken embed, and the "Open on
+     Facebook" button will just be disabled until then.
 
    The badge above the player automatically switches between
    "Streaming Soon" → "Live Now" (pulsing red dot) → "Watch The Replay",
@@ -110,6 +116,12 @@ directly in a browser, or serve the folder with any static host
    7. Tap **Finish** when the show ends — the video stays on the Page as
       a replay automatically, and the same embed keeps working so
       latecomers can watch it after.
+
+   **Testing the player before the event:** post any short public test
+   video (even a 5-second clip) to the Union Page, copy its permalink
+   (should contain `/videos/`), and paste that into `LIVE_STREAM_URL`
+   temporarily — the section will show it playing exactly like it will
+   on the day. Swap in the real Live link once you go live.
 
 8. **Sinhala translation** — all visible copy lives in `index.html`.
    Duplicate the file as `index-si.html`, translate the text nodes, and
